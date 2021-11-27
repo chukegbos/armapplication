@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+class Account extends Model
 {
     use SoftDeletes;
     protected $fillable = [

@@ -15,12 +15,10 @@ use Illuminate\Support\Facades\Input;
 
 class AccountController extends Controller
 {
-
     public function __construct()
     {
-        $this->middleware('api');
+        $this->middleware('auth:api');
     }
-
     public function store(Request $request)
     {
         $this->validate($request, [

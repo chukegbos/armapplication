@@ -17,13 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout');
-Route::post('register', 'Auth\RegisterController@register');
-
-
-
+Route::group([ 'prefix' => 'auth'], function (){ 
+    Route::group(['middleware' => ['guest:api']], function () {
+        Route::get('login', 'API\AuthController@showlogin')->name('login');
+        Route::post('login', 'API\AuthController@login');
+        Route::post('signup', 'API\AuthController@signup');
+    });
+    
+    Route::group(['middleware' => 'auth:api'], function() {
+        Route::get('logout', 'API\AuthController@logout');
+        Route::get('getuser', 'API\AuthController@getUser');
+    });
+}); 
 
 Route::namespace('API')->group(function () {
     Route::group(['prefix' => 'employers'], function(){
